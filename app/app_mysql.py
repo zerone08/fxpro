@@ -4,6 +4,12 @@ import MySQLdb
 mydb = MySQLdb.connect(host="localhost",db="fxpro",user="staff",passwd="kqZwIGGqAo2oB6Gf",charset="utf8")
 mycursor = mydb.cursor()
 
+
+#*********************************************
+#総資産をチェックします。
+#総資産がマイナスまたは0以下の場合False
+#総資産がプラスまたは1以上の場合True
+#*********************************************
 def Soushisan_check():
     sql = "Select 総資産 From 総資産 Where ID = 1"
 
@@ -20,9 +26,15 @@ def Soushisan_check():
     mycursor.close()
     mydb.close()
 
-def insert_data():
+
+#*********************************************
+#Bid,Askの登録をします
+#BidはBidの値を
+#AskはAskの値をどちらも数値のみ
+#*********************************************
+def insert_data(Bid,Ask):
     #print(main_pro().split(",")[0])
-    sql_in = "Insert Into fxpro_data value(Null," + main_pro().split(",")[0] + "," +  main_pro().split(",")[1] + ",Now())"
+    sql_in = "Insert Into fxpro_data value(Null," + Bid + "," +  Ask + ",Now())"
 
     mycursor.execute(sql_in)
     #コミット
@@ -31,6 +43,11 @@ def insert_data():
     mycursor.close()
     mydb.close()
 
+#*********************************************
+#fxデータのカウント
+#10以上でTrue
+#9以下でFalse
+#*********************************************
 def Profx_count():
     sql_cnt = "Select Count(ID) From fxpro_data"
 
