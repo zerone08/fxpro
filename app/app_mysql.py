@@ -2,7 +2,7 @@ import MySQLdb
 
 
 mydb = MySQLdb.connect(host="localhost",db="fxpro",user="staff",passwd="kqZwIGGqAo2oB6Gf",charset="utf8")
-mycursor = mydb.cursor()
+
 
 
 #*********************************************
@@ -12,6 +12,7 @@ mycursor = mydb.cursor()
 #*********************************************
 def Soushisan_check():
     sql = "Select 総資産 From 総資産 Where ID = 1"
+    mycursor = mydb.cursor()
 
     mycursor.execute(sql)
 
@@ -36,6 +37,8 @@ def insert_data(Bid,Ask):
     #print(main_pro().split(",")[0])
     sql_in = "Insert Into fxpro_data value(Null," + Bid + "," +  Ask + ",Now())"
 
+
+    mycursor = mydb.cursor()
     mycursor.execute(sql_in)
     #コミット
     mydb.commit()
@@ -51,6 +54,7 @@ def insert_data(Bid,Ask):
 def Profx_count():
     sql_cnt = "Select Count(ID) From fxpro_data"
 
+    mycursor = mydb.cursor()
     mycursor.execute(sql_cnt)
 
     result = mycursor.fetchall()
